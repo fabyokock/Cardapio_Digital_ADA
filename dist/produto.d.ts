@@ -6,15 +6,6 @@ export declare class Produto {
     private _descricao;
     private _imagemUrl;
     constructor(id: number, nome: string, preco: number, descricao: string, imagemUrl: string);
-    static gerarNovoId(): number;
-    get id(): number;
-    get nome(): string;
-    set nome(novoNome: string);
-    get preco(): number;
-    set preco(novoPreco: number);
-    get descricao(): string;
-    get imagemUrl(): string;
-    get precoFormatado(): string;
-    gerarHTML(): string;
+    gerarHTML(mostrarAcoes?: boolean): string;
 }
 //# sourceMappingURL=produto.d.ts.map

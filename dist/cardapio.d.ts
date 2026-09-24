@@ -5,9 +5,9 @@ export declare class Cardapio {
     constructor();
     adicionarProduto(produto: Produto): void;
     deletarProduto(id: number): void;
-    filtrarPorNome(termo: string): void;
-    renderizarCardapio(idDoConteiner: string): void;
+    filtrarPorNome(termo: string, modoAdmin?: boolean): void;
+    renderizarCardapio(idDoConteiner: string, modoAdmin?: boolean): void;
     salvarStorage(): void;
-    carregarStorage(): void;
+    carregarStorage(modoAdmin?: boolean): void;
 }
 //# sourceMappingURL=cardapio.d.ts.map
