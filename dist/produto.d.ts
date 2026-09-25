@@ -1,20 +1,28 @@
-export declare class Produto {
-    private static ultimoId;
-    private _id;
-    private _nome;
-    private _preco;
-    private _descricao;
-    private _imagemUrl;
-    constructor(id: number, nome: string, preco: number, descricao: string, imagemUrl: string);
-    static gerarNovoId(): number;
-    get id(): number;
-    get nome(): string;
-    set nome(novoNome: string);
-    get preco(): number;
-    set preco(novoPreco: number);
-    get descricao(): string;
-    get imagemUrl(): string;
+export interface ProdutoRenderizavel {
+    readonly id: number;
+    nome: string;
+    calcularPrecoFinal(): number;
+    gerarHTML(modoAdmin?: boolean): string;
+}
+export declare abstract class Produto implements ProdutoRenderizavel {
+    readonly id: number;
+    nome: string;
+    precoBase: number;
+    descricao: string;
+    imagemUrl: string;
+    constructor(id: number, nome: string, precoBase: number, descricao: string, imagemUrl: string);
+    abstract calcularPrecoFinal(): number;
+    abstract gerarHTML(modoAdmin?: boolean): string;
     get precoFormatado(): string;
-    gerarHTML(mostrarAcoes?: boolean): string;
+}
+export declare class Bebida extends Produto {
+    constructor(id: number, nome: string, precoBase: number, descricao: string, imagemUrl: string);
+    calcularPrecoFinal(): number;
+    gerarHTML(modoAdmin?: boolean): string;
+}
+export declare class Lanche extends Produto {
+    constructor(id: number, nome: string, precoBase: number, descricao: string, imagemUrl: string);
+    calcularPrecoFinal(): number;
+    gerarHTML(modoAdmin?: boolean): string;
 }
 //# sourceMappingURL=produto.d.ts.map

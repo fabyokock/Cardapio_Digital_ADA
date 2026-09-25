@@ -3,66 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cardápio Digital</title>
-    <script type="module" src="./dist/admin.js" defer></script> <!--ver a necessidade de ajustar essa importação-->
-    <link rel="stylesheet" href="styles/style.css" /> <!--criar arquivo styleadmin.css -->
+    <title>Cardápio Digital — Painel Administrativo</title>
+    <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
+    <header>
+      <h1>Painel Administrativo</h1>
+      <input type="text" id="campo-busca" placeholder="Buscar produto..." />
+    </header>
 
-      <header>
-          <nav>
-              <h1>Cardápio Digital</h1>
-                <div><a href="index.html">Ir para para página Principal</a></div>
-          </nav>
-      </header>
-  
-
-    <main class="conteiner">
-      <!-- Seção do formulário para cadastro -->
-      <section class="form-section">
-        <h2>Cadastrar Novo Prato</h2>
-
+    <main>
+      <section id="secao-cadastro">
+        <h2>Cadastrar novo produto</h2>
         <form id="form-produto">
-          <input type="text" id="nome" placeholder="Nome do Prato" required />
-          <input
-            type="number"
-            id="preco"
-            step="0.01"
-            placeholder="Preço (R$)"
-            required
-          />
-          <input
-            type="text"
-            id="descricao"
-            placeholder="Descrição do Prato"
-            required
-          />
+          <label for="tipo-produto">Tipo</label>
+          <select id="tipo-produto" required>
+            <option value="bebida">Bebida</option>
+            <option value="lanche">Lanche</option>
+          </select>
 
-          <div class="campo-upload">
-            <label for="imagemFile" class="btn-upload">
-              <span class="icone-upload">📁</span>
-              <span id="texto-arquivo">Escolher imagem do computador</span>
-            </label>
-            <input type="file" id="imagemFile" accept="image/*" required />
-          </div>
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" required />
 
-          <button type="submit">Adicionar Prato</button>
+          <label for="preco">Preço base (R$)</label>
+          <input type="number" id="preco" step="0.01" min="0" required />
+
+          <label for="descricao">Descrição</label>
+          <input type="text" id="descricao" required />
+
+          <label for="imagemFile">Imagem</label>
+          <input type="file" id="imagemFile" accept="image/*" />
+
+          <button type="submit">Adicionar ao cardápio</button>
         </form>
-
-        <h2>Buscar Prato</h2>
-        <input
-          type="text"
-          id="campo-busca"
-          placeholder="Buscar prato pelo nome..."
-        />
       </section>
 
-      <!-- Seção do cardápio (Inicia 100% Vazio)-->
-      <section class="cardapio-section">
-        <h2>Nossos Pratos</h2>
-        <div id="cardapio-conteiner" class="cardapio-grid"></div>
+      <section id="secao-cardapio">
+        <h2>Cardápio</h2>
+        <div id="cardapio-conteiner">
+          <!-- Os cards de produto são gerados dinamicamente aqui via TypeScript -->
+        </div>
       </section>
+
+      <aside id="secao-venda">
+        <h2>Venda atual</h2>
+        <ul id="lista-venda-atual">
+          <!-- Itens da venda atual são listados aqui via TypeScript -->
+        </ul>
+        <p>Total: R$ <span id="total-venda-atual">0.00</span></p>
+        <button id="btn-finalizar-venda">Finalizar venda</button>
+
+        <h2>Faturamento acumulado</h2>
+        <p>R$ <span id="faturamento-total">0.00</span></p>
+      </aside>
     </main>
 
+    <script type="module" src="./dist/admin.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { Produto } from "./produto.js";
+import { Produto, Bebida, Lanche } from "./produto.js";
 export class Cardapio {
     static CHAVE_STORAGE = "cardapio_produtos";
     produtos;
@@ -8,12 +8,13 @@ export class Cardapio {
     adicionarProduto(produto) {
         this.produtos.push(produto);
         this.salvarStorage();
-        this.renderizarCardapio("cardapio-conteiner", true);
     }
     deletarProduto(id) {
         this.produtos = this.produtos.filter((produto) => produto.id !== id);
         this.salvarStorage();
-        this.renderizarCardapio("cardapio-conteiner", true);
+    }
+    buscarPorId(id) {
+        return this.produtos.find((p) => p.id === id);
     }
     filtrarPorNome(termo, modoAdmin = false) {
         const termoFormatado = termo.toLowerCase().trim();
@@ -33,26 +34,43 @@ export class Cardapio {
             return;
         let htmlFinal = "";
         for (const produto of this.produtos) {
+            // Chama dinamicamente o gerarHTML correto de cada classe filha (Polimorfismo)
             htmlFinal += produto.gerarHTML(modoAdmin);
         }
         conteiner.innerHTML = htmlFinal;
     }
     salvarStorage() {
-        const dadosParaSalvar = JSON.stringify(this.produtos);
-        localStorage.setItem(Cardapio.CHAVE_STORAGE, dadosParaSalvar);
+        // Salva identificando a classe concreta do produto
+        const dadosParaSalvar = this.produtos.map((p) => ({
+            id: p.id,
+            nome: p.nome,
+            precoBase: p.precoBase,
+            descricao: p.descricao,
+            imagemUrl: p.imagemUrl,
+            tipo: p instanceof Bebida ? "bebida" : "lanche",
+        }));
+        localStorage.setItem(Cardapio.CHAVE_STORAGE, JSON.stringify(dadosParaSalvar));
     }
     carregarStorage(modoAdmin = false) {
-        const dadosSalvos = localStorage.getItem("cardapio_produtos");
+        const dadosSalvos = localStorage.getItem(Cardapio.CHAVE_STORAGE);
         if (dadosSalvos) {
             const produtosObjetos = JSON.parse(dadosSalvos);
             this.produtos = [];
             for (const item of produtosObjetos) {
-                const id = item._id ?? item.id;
-                const nome = item._nome ?? item.nome ?? "";
-                const preco = item._preco ?? item.preco ?? 0;
-                const descricao = item._descricao ?? item.descricao ?? "";
-                const imagemUrl = item._imagemUrl ?? item.imagemUrl ?? "";
-                const novoProduto = new Produto(id, nome, preco, descricao, imagemUrl);
+                const id = item.id ?? item._id;
+                const nome = item.nome ?? item._nome ?? "";
+                const precoBase = item.precoBase ?? item.preco ?? item._preco ?? 0;
+                const descricao = item.descricao ?? item._descricao ?? "";
+                const imagemUrl = item.imagemUrl ?? item._imagemUrl ?? "";
+                const tipo = item.tipo;
+                // Reinstancia a classe concreta correta preservando as regras de preço e HTML
+                let novoProduto;
+                if (tipo === "bebida") {
+                    novoProduto = new Bebida(id, nome, precoBase, descricao, imagemUrl);
+                }
+                else {
+                    novoProduto = new Lanche(id, nome, precoBase, descricao, imagemUrl);
+                }
                 this.produtos.push(novoProduto);
             }
             this.renderizarCardapio("cardapio-conteiner", modoAdmin);

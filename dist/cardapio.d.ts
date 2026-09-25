@@ -5,6 +5,7 @@ export declare class Cardapio {
     constructor();
     adicionarProduto(produto: Produto): void;
     deletarProduto(id: number): void;
+    buscarPorId(id: number): Produto | undefined;
     filtrarPorNome(termo: string, modoAdmin?: boolean): void;
     renderizarCardapio(idDoConteiner: string, modoAdmin?: boolean): void;
     salvarStorage(): void;

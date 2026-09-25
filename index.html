@@ -4,36 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cardápio Digital</title>
-    <script type="module" src="./dist/main.js" defer></script>
-    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
     <header>
-      <nav>
-        <h1>Cardápio Digital</h1>
-        <div>
-          <a href="">Pratos</a>
-          <a href="">Bebidas</a>
-          <a href="">Sobremesas</a>
-        </div>
-      </nav>
+      <h1>Cardápio Digital</h1>
+      <input type="text" id="campo-busca" placeholder="Buscar produto..." />
     </header>
 
-    <main class="conteiner">
-      <!-- Seção do cardápio (Inicia 100% Vazio)-->
-      <section class="cardapio-section">
-        <h2>Nossos Pratos</h2>
-        <div id="cardapio-conteiner" class="cardapio-grid"></div>
-      </section>
-    </main>
-    <footer>
-      <div id="endereco">
-        <p>Rua das Amoreiras, nº 1</p>
-        <p>Campo Grande</p>
-        <p>Rio de Janeiro, RJ</p>
+    <main>
+      <div id="cardapio-conteiner">
+        <!-- Os cards de produto são gerados dinamicamente aqui via TypeScript -->
       </div>
+    </main>
 
-      <p id="direitos">by Grupo 4</p>
-    </footer>
+    <script type="module" src="./dist/main.js"></script>
   </body>
 </html>

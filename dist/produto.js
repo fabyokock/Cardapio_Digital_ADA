@@ -1,78 +1,87 @@
+// Classe-base abstrata que implementa a interface
 export class Produto {
-    static ultimoId = 1000;
-    _id;
-    _nome = "";
-    _preco = 0;
-    _descricao;
-    _imagemUrl;
-    constructor(id, nome, preco, descricao, imagemUrl) {
-        this._id = id;
+    id;
+    nome;
+    precoBase;
+    descricao;
+    imagemUrl;
+    constructor(id, nome, precoBase, descricao, imagemUrl) {
+        this.id = id;
         this.nome = nome;
-        this.preco = preco;
-        this._descricao = descricao;
-        this._imagemUrl = imagemUrl;
+        this.precoBase = precoBase;
+        this.descricao = descricao;
+        this.imagemUrl = imagemUrl;
     }
-    // --- MÉTODOS ESTÁTICOS ---
-    static gerarNovoId() {
-        this.ultimoId++;
-        return this.ultimoId;
-    }
-    // --- GETTERS E SETTERS ---
-    get id() {
-        return this._id;
-    }
-    get nome() {
-        return this._nome;
-    }
-    set nome(novoNome) {
-        if (typeof novoNome === "string") {
-            const nomeLimpo = novoNome.trim();
-            if (nomeLimpo.length >= 3) {
-                this._nome = nomeLimpo;
-            }
-            else {
-                console.warn(`O nome do produto deve ter pelo menos 03 caracteres.`);
-            }
-        }
-        else {
-            console.warn(`Nome inválido fornecido ao produto.`);
-        }
-    }
-    get preco() {
-        return this._preco;
-    }
-    set preco(novoPreco) {
-        if (novoPreco > 0) {
-            this._preco = novoPreco;
-        }
-        else {
-            console.warn(`O preço deve ser um valor maior que zero.`);
-        }
-    }
-    get descricao() {
-        return this._descricao;
-    }
-    get imagemUrl() {
-        return this._imagemUrl;
-    }
+    // Getter auxiliar para formatar o preço final retornado por cada subclasse
     get precoFormatado() {
-        return `R$ ${this._preco.toFixed(2)}`;
+        return `R$ ${this.calcularPrecoFinal().toFixed(2)}`;
     }
-    // Retorna o HTML do card visual do produto
-    gerarHTML(mostrarAcoes = false) {
-        const botaoDeletar = mostrarAcoes
-            ? `<div class="card-acoes"><button class="btn-deletar" data-id="${this.id}">Deletar</button></div>`
-            : ""; //se não for false(true), cria o botão deletar
+}
+// Subclasse 1: Bebida (Especialização que adiciona taxa de R$ 1,50)
+export class Bebida extends Produto {
+    constructor(id, nome, precoBase, descricao, imagemUrl) {
+        super(id, nome, precoBase, descricao, imagemUrl);
+    }
+    // Polimorfismo: Preço base + taxa de serviço/embalagem
+    calcularPrecoFinal() {
+        return this.precoBase + 1.5;
+    }
+    // Polimorfismo: Renderização personalizada para Bebida
+    // Bebida
+    gerarHTML(modoAdmin = false) {
+        const botaoDeletar = modoAdmin
+            ? `<button class="btn-deletar" data-id="${this.id}">Deletar</button>`
+            : "";
+        const botaoVenda = modoAdmin
+            ? `<button class="btn-adicionar-venda" data-id="${this.id}">+ Venda</button>`
+            : "";
         return `
-  <div class="card-produto">
-      <img src="${this.imagemUrl}" alt="${this.nome}"> 
-      <div class="card-conteudo">
-          <h3>${this.nome}</h3>
-          <p class="descricao">${this.descricao}</p>
-          <p class="preco">${this.precoFormatado}</p>
+    <div class="card-produto" data-id="${this.id}">
+      <img src="${this.imagemUrl}" alt="${this.nome}" class="card-imagem">
+      <div class="card-corpo">
+        <h3 class="card-nome">${this.nome}</h3>
+        <p class="card-descricao">${this.descricao}</p>
+        <span class="card-preco">${this.precoFormatado}</span>
+        <div class="card-acoes">
+          ${botaoVenda}
           ${botaoDeletar}
-      </div> 
-  </div>`;
+        </div>
+      </div>
+    </div>
+  `;
+    }
+}
+// Subclasse 2: Lanche (oferece 10% de desconto promocional)
+export class Lanche extends Produto {
+    constructor(id, nome, precoBase, descricao, imagemUrl) {
+        super(id, nome, precoBase, descricao, imagemUrl);
+    }
+    // Polimorfismo: Aplica 10% de desconto no preço final
+    calcularPrecoFinal() {
+        return this.precoBase * 0.9;
+    }
+    // Lanche — mesma estrutura, só troca o cálculo de preço (herdado do polimorfismo)
+    gerarHTML(modoAdmin = false) {
+        const botaoDeletar = modoAdmin
+            ? `<button class="btn-deletar" data-id="${this.id}">Deletar</button>`
+            : "";
+        const botaoVenda = modoAdmin
+            ? `<button class="btn-adicionar-venda" data-id="${this.id}">+ Venda</button>`
+            : "";
+        return `
+    <div class="card-produto" data-id="${this.id}">
+      <img src="${this.imagemUrl}" alt="${this.nome}" class="card-imagem">
+      <div class="card-corpo">
+        <h3 class="card-nome">${this.nome}</h3>
+        <p class="card-descricao">${this.descricao}</p>
+        <span class="card-preco">${this.precoFormatado}</span>
+        <div class="card-acoes">
+          ${botaoVenda}
+          ${botaoDeletar}
+        </div>
+      </div>
+    </div>
+  `;
     }
 }
 //# sourceMappingURL=produto.js.map
