@@ -11,16 +11,16 @@ export class Cardapio {
   adicionarProduto(produto: Produto): void {
     this.produtos.push(produto);
     this.salvarStorage();
-    this.renderizarCardapio("cardapio-conteiner",true);
+    this.renderizarCardapio("cardapio-conteiner", true);
   }
 
   deletarProduto(id: number): void {
     this.produtos = this.produtos.filter((produto) => produto.id !== id);
     this.salvarStorage();
-    this.renderizarCardapio("cardapio-conteiner",true);
+    this.renderizarCardapio("cardapio-conteiner", true);
   }
 
-  filtrarPorNome(termo: string,modoAdmin:boolean=false): void {
+  filtrarPorNome(termo: string, modoAdmin: boolean = false): void {
     const termoFormatado = termo.toLowerCase().trim();
 
     const produtosFiltrados = this.produtos.filter((produto) =>
@@ -40,7 +40,7 @@ export class Cardapio {
     conteiner.innerHTML = htmlFinal;
   }
 
-  renderizarCardapio(idDoConteiner: string, modoAdmin:boolean=false): void {
+  renderizarCardapio(idDoConteiner: string, modoAdmin: boolean = false): void {
     const conteiner = document.getElementById(idDoConteiner);
 
     if (!conteiner) return;
@@ -58,7 +58,7 @@ export class Cardapio {
     localStorage.setItem(Cardapio.CHAVE_STORAGE, dadosParaSalvar);
   }
 
-  carregarStorage(modoAdmin:boolean=false): void {
+  carregarStorage(modoAdmin: boolean = false): void {
     const dadosSalvos = localStorage.getItem("cardapio_produtos");
 
     if (dadosSalvos) {
@@ -76,7 +76,7 @@ export class Cardapio {
 
         this.produtos.push(novoProduto);
       }
-      this.renderizarCardapio("cardapio-conteiner",modoAdmin);
+      this.renderizarCardapio("cardapio-conteiner", modoAdmin);
     }
   }
 }

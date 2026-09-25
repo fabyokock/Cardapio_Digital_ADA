@@ -9,7 +9,8 @@ const campoBusca = document.getElementById("campo-busca");
 if (form) {
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const nomeInput = document.getElementById("nome").value;
+        const nomeInput = document.getElementById("nome")
+            .value;
         const precoInput = parseFloat(document.getElementById("preco").value);
         const descricaoInput = document.getElementById("descricao").value;
         const inputArquivo = document.getElementById("imagemFile");

@@ -79,19 +79,16 @@
 //   });
 // }
 
-
-
 import { Cardapio } from "./cardapio.js";
 
 const meuCardapio = new Cardapio();
 meuCardapio.carregarStorage(false);
 meuCardapio.renderizarCardapio("cardapio-conteiner", false); // Renderiza no modo padrão (false), ocultando os botões de deletar
 
-
 const campoBusca = document.getElementById("campo-busca") as HTMLInputElement;
 
 if (campoBusca) {
   campoBusca.addEventListener("input", () => {
-    meuCardapio.filtrarPorNome(campoBusca.value,false);
+    meuCardapio.filtrarPorNome(campoBusca.value, false);
   });
 }

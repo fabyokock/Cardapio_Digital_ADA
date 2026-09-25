@@ -76,10 +76,10 @@ export class Produto {
   }
 
   // Retorna o HTML do card visual do produto
-  gerarHTML(mostrarAcoes: boolean=false): string {
-    const botaoDeletar=mostrarAcoes 
-    ?`<div class="card-acoes"><button class="btn-deletar" data-id="${this.id}">Deletar</button></div>`
-    : ''; //se não for false(true), cria o botão deletar
+  gerarHTML(mostrarAcoes: boolean = false): string {
+    const botaoDeletar = mostrarAcoes
+      ? `<div class="card-acoes"><button class="btn-deletar" data-id="${this.id}">Deletar</button></div>`
+      : ""; //se não for false(true), cria o botão deletar
 
     return `
   <div class="card-produto">
@@ -87,7 +87,7 @@ export class Produto {
       <div class="card-conteudo">
           <h3>${this.nome}</h3>
           <p class="descricao">${this.descricao}</p>
-          <p class="preco">${this.preco.toFixed(2)}</p>
+          <p class="preco">${this.precoFormatado}</p>
           ${botaoDeletar}
       </div> 
   </div>`;
