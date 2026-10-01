@@ -1,14 +1,6 @@
-<<<<<<< HEAD
-
 # Cardápio Digital
 
 > # **Projeto:** Cardápio Digital (Frontend)
-
-# Cardapio_Digital_ADA
-
-Projeto: Cardápio Digital (Frontend)
-
-> > > > > > > c4b1549df13e7be71e2d78e20f9a90c0390099df
 
 Aplicação web interativa. Projeto final do Módulo 02 **Programação Orientada a Objetos (POO)**. CAIXAVERSO – Formação Continuada 4 | Dev Front-end – I. ADA TECH.
 
