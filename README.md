@@ -58,10 +58,6 @@ Aplicação web interativa. Projeto final do Módulo 02 **Programação Orientad
 
 ## Alunos
 
-=======
-
-## Alunos
-
 - Bruna Pozza
 - Fabyo Kock
 - Nailson Lira
